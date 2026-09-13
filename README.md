@@ -1,16 +1,31 @@
-# React + Vite
+# 🍕 Cacahuate's Pizzeria
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Landing page de una pizzería, hecha con **React + Vite + Bootstrap**. Muestra un catálogo de pizzas con nombre, precio e ingredientes, y una barra de navegación con estado de sesión simulado.
 
-Currently, two official plugins are available:
+> Proyecto realizado como parte del **Hito 1 - Introducción a React** de Desafío Latam.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Features
 
-## React Compiler
+- 🧭 Navbar con botones condicionales según estado de sesión (`token`)
+- 🛒 Total de compra formateado con separador de miles
+- 🍕 Catálogo de pizzas mediante componentes reutilizables con props
+- 📱 Layout responsive (Bootstrap grid) con footer siempre pegado al fondo
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Stack
 
-## Expanding the ESLint configuration
+React · Vite · Bootstrap 5
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🧩 Componentes
+
+`Navbar` · `Header` · `Home` · `CardPizza` · `Footer`
+
+## 🚀 Uso
+
+```bash
+npm install
+npm run dev
+```
+
+## 👤 Autor
+
+Eliseo — [GitHub](https://github.com/UnCacahuate)
