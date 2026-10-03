@@ -4,6 +4,8 @@ Landing page de una pizzería, hecha con **React + Vite + Bootstrap**. Muestra u
 
 > Proyecto realizado como parte del **Hito 1 - Introducción a React** de Desafío Latam.
 
+## https://uncacahuate.github.io/pizzeria_react/
+
 ## ✨ Features
 
 - 🧭 Navbar con botones condicionales según estado de sesión (`token`)
