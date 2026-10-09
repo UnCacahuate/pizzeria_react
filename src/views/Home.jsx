@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import Header from './Header';
-import CardPizza from './CardPizza';
+import Header from '../components/Header';
+import CardPizza from '../components/CardPizza';
 
 const Home = () => {
 
@@ -48,31 +48,6 @@ const Home = () => {
                 </div>
               )
             })}
-
-{/*           <div className="col-12 col-md-4">
-            <CardPizza
-              name="Napolitana"
-              price={5950}
-              ingredients={["mozzarella", "tomates", "jamón", "orégano"]}
-              img="https://images.unsplash.com/photo-1513104890138-7c749659a591?fm=jpg&q=80&w=800&auto=format&fit=crop"
-            />
-          </div>
-          <div className="col-12 col-md-4">
-            <CardPizza
-              name="Española"
-              price={6950}
-              ingredients={["mozzarella", "gorgonzola", "parmesano", "provolone"]}
-              img="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?fm=jpg&q=80&w=800&auto=format&fit=crop"
-            />
-          </div>
-          <div className="col-12 col-md-4">
-            <CardPizza
-              name="Pepperoni"
-              price={6950}
-              ingredients={["mozzarella", "pepperoni", "orégano"]}
-              img="https://images.unsplash.com/photo-1573821663912-6df460f9c684?fm=jpg&q=80&w=800&auto=format&fit=crop"
-            />
-          </div> */}
         </div>
       </div>
     </div>
