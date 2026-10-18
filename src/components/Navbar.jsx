@@ -1,9 +1,13 @@
+import { useContext } from 'react';
 import { formatearMoneda } from '../utilitarios/formatearMoneda';
 import { Link } from 'react-router-dom';
+import { CartContext } from '../contexts/CartContext';
 
 const Navbar = () => {
-  const total = 25000;
+  const {valorTotal, pizzas} = useContext(CartContext)
+  const totalItems = pizzas.reduce((acumulado, item) => acumulado + item.count, 0)
   const token = false;
+
 
   return (
     <nav className="navbar navbar-dark bg-dark px-3">
@@ -35,7 +39,7 @@ const Navbar = () => {
         </Link>
         <Link to="/cart">
           <button className="btn btn-outline-light btn-sm">
-            🛒 Total: ${formatearMoneda(total)}
+            🛒 Items: {totalItems} Total: ${formatearMoneda(valorTotal)}
           </button>
         </Link>
       </div>

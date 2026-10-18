@@ -1,6 +1,11 @@
 import { formatearMoneda } from '../utilitarios/formatearMoneda';
+import { CartContext } from '../contexts/CartContext';
+import { useContext } from 'react';
 
-const CardPizza = ({ name, price, desc, ingredients, img }) => {
+const CardPizza = ({ id, name, price, desc, ingredients, img}) => {
+  
+  const { anadirPizza } = useContext(CartContext)
+
   return (
     <div className="card h-100">
       <img src={img} className="card-img-top" alt={name} />
@@ -21,7 +26,9 @@ const CardPizza = ({ name, price, desc, ingredients, img }) => {
         </p>
         <p className="fw-bold">Precio: ${formatearMoneda(price)}</p>
         <button className="btn btn-outline-secondary btn-sm me-2">Ver Más</button>
-        <button className="btn btn-dark btn-sm">Añadir</button>
+        <button className="btn btn-dark btn-sm" onClick={()=>{
+            anadirPizza({ id, name, price, img, desc })
+          }}>Añadir</button>
       </div>
     </div>
   );

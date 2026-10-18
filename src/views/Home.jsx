@@ -38,7 +38,8 @@ const Home = () => {
             {pizzas.map((pizza)=>{
               return(
                 <div className="col-12 col-md-4" key={pizza.id}>
-                  <CardPizza 
+                  <CardPizza
+                    id={pizza.id}
                     name={pizza.name}
                     desc={pizza.desc}
                     img={pizza.img}
