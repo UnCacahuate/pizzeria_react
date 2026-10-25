@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../contexts/UserContext';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [contrasena, setContrasena] = useState('');
+  const navigate = useNavigate()
+  const {token, setToken} = useContext(UserContext)
 
   const manejarEnvio = (evento) => {
     evento.preventDefault();
@@ -17,7 +21,12 @@ const LoginPage = () => {
       return;
     }
 
-    alert('¡Autenticación exitosa!');
+    alert('¡Iniciaste Sesión!')
+    setEmail("")
+    setContrasena("")
+    setToken(true)
+    navigate("/")
+
   };
 
   return (

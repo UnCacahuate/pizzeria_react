@@ -1,9 +1,11 @@
 import { formatearMoneda } from '../utilitarios/formatearMoneda';
 import { CartContext } from '../contexts/CartContext';
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const CardPizza = ({ id, name, price, desc, ingredients, img}) => {
   
+  const navigate = useNavigate()
   const { anadirPizza } = useContext(CartContext)
 
   return (
@@ -25,7 +27,7 @@ const CardPizza = ({ id, name, price, desc, ingredients, img}) => {
           {desc}
         </p>
         <p className="fw-bold">Precio: ${formatearMoneda(price)}</p>
-        <button className="btn btn-outline-secondary btn-sm me-2">Ver Más</button>
+        <button onClick={()=> navigate(`/detalle/${id}`)} className="btn btn-outline-secondary btn-sm me-2">Ver Más</button>
         <button className="btn btn-dark btn-sm" onClick={()=>{
             anadirPizza({ id, name, price, img, desc })
           }}>Añadir</button>

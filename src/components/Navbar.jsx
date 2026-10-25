@@ -1,47 +1,44 @@
-import { useContext } from 'react';
+import { useContext, startTransition } from 'react';
 import { formatearMoneda } from '../utilitarios/formatearMoneda';
-import { Link } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { CartContext } from '../contexts/CartContext';
+import { UserContext } from '../contexts/UserContext';
 
 const Navbar = () => {
   const {valorTotal, pizzas} = useContext(CartContext)
   const totalItems = pizzas.reduce((acumulado, item) => acumulado + item.count, 0)
-  const token = false;
-
+  const { token, logout } = useContext(UserContext)
+  const navigate = useNavigate()
 
   return (
     <nav className="navbar navbar-dark bg-dark px-3">
       <span className="navbar-brand mb-0 h1">Cacahuate's Pizzeria!</span>
 
       <div className="d-flex gap-2">
-        <Link to="/">
-          <button className="btn btn-outline-light btn-sm">🍕 Home</button>
-        </Link>
+        <NavLink to="/" className={({isActive})=> isActive? "btn btn-light btn-sm" : "btn btn-outline-light btn-sm"}>
+            🍕 Home
+        </NavLink>
 
         {token ? (
           <>
-            <button className="btn btn-outline-light btn-sm">🔓 Perfil</button>
-            <button className="btn btn-outline-light btn-sm">🔒 Cerrar sesión</button>
+            <NavLink to="/profile" className={({isActive})=> isActive? "btn btn-light btn-sm" : "btn btn-outline-light btn-sm"}>
+              👤 Perfil
+            </NavLink>
+            <button className="btn btn-outline-light btn-sm" onClick={()=> startTransition(()=>{logout(); navigate("/")})}>🔒 Cerrar sesión</button >
           </>
         ) : (
           <>
-            <Link to="/login">
-              <button className="btn btn-outline-light btn-sm">🔐 Ingresar</button>
-            </Link>
-            <Link to="/register">
-              <button className="btn btn-outline-light btn-sm">🔐 Registrarse</button>
-            </Link>
+            <NavLink to="/login" className={({isActive})=> isActive? "btn btn-light btn-sm" : "btn btn-outline-light btn-sm"}>
+              🔐 Ingresar
+            </NavLink>
+            <NavLink to="/register" className={({isActive})=> isActive? "btn btn-light btn-sm" : "btn btn-outline-light btn-sm"}>
+              🔐 Registrarse
+            </NavLink>
           </>
         )}
-        
-        <Link to="/profile">
-          <button className="btn btn-outline-light btn-sm">👤 Perfil</button>
-        </Link>
-        <Link to="/cart">
-          <button className="btn btn-outline-light btn-sm">
+        <NavLink to="/cart" className={({isActive})=> isActive? "btn btn-light btn-sm" : "btn btn-outline-light btn-sm"}>
             🛒 Items: {totalItems} Total: ${formatearMoneda(valorTotal)}
-          </button>
-        </Link>
+        </NavLink>
       </div>
     </nav>
   );
