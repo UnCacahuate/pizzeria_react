@@ -1,10 +1,29 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { CartContext } from '../contexts/CartContext'
 import { UserContext } from '../contexts/UserContext'
 
 export default function Cart() {
   const { pizzas, valorTotal, sumarElemento, restarElemento } = useContext(CartContext)
   const { token } = useContext(UserContext)
+  const [msjExito, setMsjExito] = useState("")
+
+  const pagar = async () => {
+    try{
+      const res = await fetch("http://localhost:5000/api/checkouts",{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ cart: pizzas })
+      })
+      if (!res.ok) throw new Error("Algo salió mal")
+      setMsjExito("compra exitosa")
+      return true
+    }catch{
+      return false
+    }
+  }
 
   return (
     <div className="container m-5">
@@ -24,16 +43,16 @@ export default function Cart() {
 
           <span style={{ minWidth: '80px' }}>${item.price.toLocaleString('es-CL')}</span>
 
-          <button className="btn btn-outline-danger btn-sm" onClick={() => restarElemento(item.id)}>-</button>
+          <button className="btn btn-outline-danger btn-sm" onClick={() => {restarElemento(item.id); setMsjExito("")}}>-</button>
           <span>{item.count}</span>
-          <button className="btn btn-outline-primary btn-sm" onClick={() => sumarElemento(item.id)}>+</button>
+          <button className="btn btn-outline-primary btn-sm" onClick={() => {sumarElemento(item.id); setMsjExito("")}}>+</button>
         </div>
       ))}
 
       <h2 className="fw-bold mt-4">Total: ${valorTotal.toLocaleString('es-CL')}</h2>
       
-      <button type="button" className="btn btn-dark" disabled={!token}>Pagar</button>
-
+      <button type="button" className="btn btn-dark" disabled={!token} onClick={pagar}>Pagar</button>
+      {msjExito && <div className="alert alert-success mt-3">{msjExito}</div>}
     </div>
   )
 }

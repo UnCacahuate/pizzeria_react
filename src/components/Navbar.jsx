@@ -5,7 +5,7 @@ import { CartContext } from '../contexts/CartContext';
 import { UserContext } from '../contexts/UserContext';
 
 const Navbar = () => {
-  const {valorTotal, pizzas} = useContext(CartContext)
+  const {valorTotal, pizzas, setPizzas} = useContext(CartContext)
   const totalItems = pizzas.reduce((acumulado, item) => acumulado + item.count, 0)
   const { token, logout } = useContext(UserContext)
   const navigate = useNavigate()
@@ -24,7 +24,7 @@ const Navbar = () => {
             <NavLink to="/profile" className={({isActive})=> isActive? "btn btn-light btn-sm" : "btn btn-outline-light btn-sm"}>
               👤 Perfil
             </NavLink>
-            <button className="btn btn-outline-light btn-sm" onClick={()=> startTransition(()=>{logout(); navigate("/")})}>🔒 Cerrar sesión</button >
+            <button className="btn btn-outline-light btn-sm" onClick={()=> startTransition(()=>{logout(); setPizzas([]); navigate("/")})}>🔒 Cerrar sesión</button >
           </>
         ) : (
           <>

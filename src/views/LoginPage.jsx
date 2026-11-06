@@ -3,12 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../contexts/UserContext';
 
 const LoginPage = () => {
+  const {login} = useContext(UserContext)
   const [email, setEmail] = useState('');
   const [contrasena, setContrasena] = useState('');
   const navigate = useNavigate()
-  const {token, setToken} = useContext(UserContext)
 
-  const manejarEnvio = (evento) => {
+
+  const manejarEnvio = async (evento) => {
     evento.preventDefault();
 
     if (!email || !contrasena) {
@@ -21,11 +22,17 @@ const LoginPage = () => {
       return;
     }
 
-    alert('¡Iniciaste Sesión!')
+    const ok = await login(email, contrasena)
+
+    if (!ok) {
+      alert('Mail o contraseña incorrectos')
+    } else {
+      alert('¡Iniciaste Sesión!')
+      navigate("/")
+    }
+
     setEmail("")
     setContrasena("")
-    setToken(true)
-    navigate("/")
 
   };
 

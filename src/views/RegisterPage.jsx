@@ -1,11 +1,15 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../contexts/UserContext';
 
 const RegisterPage = () => {
   const [email, setEmail] = useState('');
   const [contrasena, setContrasena] = useState('');
   const [confirmarContrasena, setConfirmarContrasena] = useState('');
+  const {register} = useContext(UserContext)
+  const navigate = useNavigate()
 
-  const manejarEnvio = (evento) => {
+  const manejarEnvio = async (evento) => {
     evento.preventDefault();
 
     if (!email || !contrasena || !confirmarContrasena) {
@@ -22,8 +26,14 @@ const RegisterPage = () => {
       alert('Las contraseñas no coinciden.');
       return;
     }
+    const ok = await register(email, contrasena)
 
-    alert('¡Registro exitoso!');
+    if (!ok) {
+      alert('Algo salio mal')
+    } else {
+      alert('¡Registro Exitoso!')
+      navigate("/")
+    }
   };
 
   return (

@@ -1,8 +1,19 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import React from 'react';
+import React, { useContext, useEffect, useState, startTransition } from 'react';
+import { UserContext } from '../contexts/UserContext';
+import { useNavigate } from 'react-router-dom';
+
 
 function Profile() {
+  const [perfil, setPerfil] = useState(null)
+  const {getProfile, logout} = useContext(UserContext)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    getProfile().then(data => setPerfil(data))
+  }, [])
+
   return (
     <div
       className="modal show flex-fill d-flex justify-content-center align-items-center"
@@ -14,11 +25,11 @@ function Profile() {
         </Modal.Header>
 
         <Modal.Body>
-          <h3>emaildeprueba@email.com</h3>
+          <h3>{perfil ? perfil.email : "Cargando..."}</h3>
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="primary">Cerrar Sesión</Button>
+          <Button variant="primary" onClick={()=> startTransition(()=>{logout(); setPizzas([]); navigate("/")})}>Cerrar Sesión</Button>
         </Modal.Footer>
       </Modal.Dialog>
     </div>

@@ -1,24 +1,26 @@
 # 🍕 Cacahuate's Pizzeria
 
-Aplicación web de una pizzería hecha con **React + Vite + Bootstrap**. Muestra el catálogo de pizzas consumido desde una API local, permite ver el detalle de cada una, armar un carrito de compras con estado global y simula una sesión de usuario con rutas protegidas.
+Aplicación web de una pizzería hecha con **React + Vite + Bootstrap**. Muestra el catálogo de pizzas consumido desde una API local, permite ver el detalle de cada una, armar un carrito de compras con estado global, y cuenta con autenticación real mediante **JWT** y rutas protegidas.
 
-> Proyecto desarrollado a lo largo de los hitos de **Desafío Latam** (Hito 1 al Hito 7).
+> Proyecto desarrollado a lo largo de los hitos de **Desafío Latam** (Hito 1 al Hito 8).
 
 ## 🌐 Demo
 
 https://uncacahuate.github.io/pizzeria_react/
 
-> ⚠️ La demo publicada no puede cargar las pizzas, porque la API corre en `localhost:5000`. Para ver el catálogo completo, ejecuta el proyecto junto con el backend en tu equipo.
+> ⚠️ La demo publicada no puede cargar las pizzas ni iniciar sesión, porque la API corre en `localhost:5000`. Para usar la aplicación completa, ejecuta el proyecto junto con el backend en tu equipo.
 
 ## ✨ Features
 
 - 🍕 Catálogo de pizzas con componentes reutilizables (`CardPizza`) y datos desde la API (`useEffect` + `fetch`)
 - 🔎 Vista de detalle por pizza usando `useParams` (`/detalle/:id`)
 - 🛒 Carrito global con **Context API**: añadir, sumar y restar productos, con total e ítems en el Navbar
-- 🔐 Sesión simulada con `UserContext` (token + `logout`)
+- 🔐 Autenticación con JWT en `UserContext`: `login`, `register`, `logout` y `getProfile`, con `token` y `email` en estado global
+- 👤 Perfil que muestra el email del usuario autenticado, obtenido desde el backend (`/api/auth/me`)
+- 💳 Checkout: el carrito se envía al backend con el token en el header `Authorization`, y se muestra un mensaje de éxito
 - 🧭 Navbar con `NavLink` que resalta la ruta activa y muestra botones según el estado de sesión
 - 🚧 Rutas protegidas: `/profile` exige sesión; `/login` y `/register` redirigen al inicio si ya hay sesión
-- 💳 Botón "Pagar" deshabilitado cuando no hay sesión
+- 🚫 Botón "Pagar" deshabilitado cuando no hay sesión
 - ❓ Página 404 para rutas inexistentes
 - 📱 Layout responsive (Bootstrap) con footer siempre pegado al fondo
 
@@ -28,9 +30,9 @@ https://uncacahuate.github.io/pizzeria_react/
 |---|---|---|
 | `/` | Home | Público |
 | `/detalle/:id` | Detalle de pizza | Público |
-| `/cart` | Carrito | Público (pago solo con sesión) |
-| `/login` | Login | Solo sin sesión |
-| `/register` | Registro | Solo sin sesión |
+| `/cart` | Carrito y checkout | Público (pago solo con sesión) |
+| `/login` | Login (consume `/api/auth/login`) | Solo sin sesión |
+| `/register` | Registro (consume `/api/auth/register`) | Solo sin sesión |
 | `/profile` | Perfil | Solo con sesión |
 | `/404` y cualquier otra | Página no encontrada | Público |
 
@@ -55,10 +57,20 @@ npm install
 npm run dev
 ```
 
-La aplicación espera una API de pizzas en `http://localhost:5000`:
+La aplicación espera el backend de pizzas en `http://localhost:5000`:
 
-- `GET /api/pizzas` — lista de pizzas
-- `GET /api/pizzas/:id` — una pizza por id
+| Método | Ruta | Descripción |
+|---|---|---|
+| `GET` | `/api/pizzas` | Lista de pizzas |
+| `GET` | `/api/pizzas/:id` | Una pizza por id |
+| `POST` | `/api/auth/login` | Inicia sesión, devuelve `{ email, token }` |
+| `POST` | `/api/auth/register` | Registra un usuario, devuelve `{ email, token }` |
+| `GET` | `/api/auth/me` | Perfil del usuario (requiere token JWT) |
+| `POST` | `/api/checkouts` | Envía el carrito (requiere token JWT) |
+
+Las rutas protegidas reciben el token en el header `Authorization: Bearer <token>`.
+
+> El token vive solo en memoria: al recargar la página se cierra la sesión.
 
 ## 📦 Despliegue
 
